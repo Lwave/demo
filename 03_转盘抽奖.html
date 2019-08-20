@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <title>Title</title>
+    <!--引入js插件库-->
+    <script src="js/jquery.min.js"></script>
+    <!--引入转盘-->
+    <script src="js/jquery.rotate.min.js"></script>
+</head>
+<style>
+      *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    body {
+        background: #D71F2E;
+    }
+
+    #box {
+        position: relative; /*相对定位：相对于元素本身的位置 父元素---参照物*/
+        width: 854px;
+        height: 504px;
+        background-image: url("images/bg1.png");
+        margin: 50px auto;
+    }
+
+    .arrow {
+        position: absolute; /*绝对定位*/
+        left: 181px;
+        top: 104px;
+        width: 294px;
+        height: 294px;
+        background-image: url("images/arrow.png");
+    }
+
+    .user {
+        position: absolute;
+        width: 120px;
+        height: 320px;
+        /*background: yellow;*/
+        top: 144px;
+        right: 48px;
+        overflow: hidden; /*超出隐藏*/
+    }
+
+    .user ul {
+        position: relative;
+        top: 0px;
+    }
+
+    .user ul li {
+        list-style: none; /*去除前面的小圆点*/
+        height: 37px;
+        background: url("images/user.png") no-repeat 0 center; /* 0:水平方向显示在左边，center竖直方向居中*/
+        line-height: 37px; /*一行文本占多高*/
+        text-indent: 20px; /*首行文本内容缩进*/
+        color: #FFC242; /*文字颜色*/
+    }
+
+    .result {
+        position: absolute;
+        top: 191px;
+        left: 128px;
+        width: 400px;
+        height: 120px;
+        background: rgba(0, 0, 0, 0.5); /*透明背景：red green blue 蓝色：0-255 a透明度(0-1)*/
+        display: none;
+    }
+
+    .result p {
+        text-align: center; /*文本左右对齐方式*/
+        line-height: 120px;
+        color: #fff;
+    }
+
+    .result a {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 24px;
+        height: 24px;
+        background: url("images/close.png");
+    }
+</style>
+<script>
+    $(function () {
+        $(".arrow").click(function () {
+            //什么元素  改变什么元素
+            //生成随机角度
+            var n = [0, 1, 2, 3, 4, 5, 6, 7];
+            //Math.random()：随机生成一个0-1之间的小数0-0.9999  n.length数组长度
+            var m = n[Math.floor(Math.random() * n.length)];
+            switch (m) {
+                case 0:
+                    rotateFun(0, "很遗憾没中奖，再接再厉！");
+                    break;
+                case 1:
+                    rotateFun(45, "恭喜你获得了&nbsp;<span style='color: yellow'>5</span>&nbsp;元代金券！");
+                    break;
+                case 2:
+                    rotateFun(90, "恭喜你获得了&nbsp;<span style='color: yellow'>1</span>&nbsp;元代金券！");
+                    break;
+                case 3:
+                    rotateFun(135, "恭喜你获得了&nbsp;<span style='color: yellow'>10</span>&nbsp;元代金券！");
+                    break;
+                case 4:
+                    rotateFun(180, "很遗憾没中奖，再接再厉！");
+                    break;
+                case 5:
+                    rotateFun(225, "恭喜你获得了&nbsp;<span style='color: yellow'>20</span>&nbsp;元代金券！");
+                    break;
+                case 6:
+                    rotateFun(270, "恭喜你获得了&nbsp;<span style='color: yellow'>50</span>&nbsp;元代金券！");
+                    break;
+                case 7:
+                    rotateFun(315, "恭喜你获得了&nbsp;<span style='color: yellow'>30</span>&nbsp;元代金券！");
+                    break;
+
+            }
+            /* rotateFun(120);//执行函数*/
+        });
+        setInterval(function () {
+            //让用户名循环滚动
+            $(".user ul").animate({"top":"-37px"},500,function () {
+                //让动画执行结束把移上去的第一个添加到后面去
+                //$(this)  指代$(".user ul")
+                $(this).append($(".user ul li:first"));
+                //把ul的top值改为0
+                $(this).css("top", 0);
+            });
+    },1000);
+        });
+    //自定义旋转功能的函数
+    function rotateFun(angle, text) {
+        $(".arrow").rotate({
+            angle: 0,//初始位置
+            duration: 4000,//旋转时间
+            animateTo: angle + 360 * 5,
+            callback: function () {//当动画执行完成再执行什么功能
+                $(".result").fadeIn("slow");
+                $(".result p").html(text);
+
+                $(".result a").click(function () {
+                    $(".result").fadeOut("slow");
+                });
+            }
+        });
+    }
+
+
+</script>
+<body>
+<div id="box">
+    <div class="arrow">
+
+    </div>
+    <div class="user">
+        <ul>
+            <li>155xxxx8383</li>
+            <li>155xxxx8222</li>
+            <li>155xxxx8555</li>
+            <li>185xxxx6262</li>
+            <li>155xxxx8585</li>
+            <li>155xxxx8383</li>
+            <li>155xxxx8222</li>
+            <li>155xxxx8555</li>
+            <li>185xxxx6262</li>
+            <li>155xxxx8585</li>
+            <li>155xxxx8383</li>
+            <li>155xxxx8222</li>
+            <li>155xxxx8555</li>
+            <li>185xxxx6262</li>
+            <li>155xxxx8585</li>
+            <li>155xxxx8383</li>
+            <li>155xxxx8222</li>
+            <li>155xxxx8555</li>
+            <li>185xxxx6262</li>
+            <li>155xxxx8585</li>
+            <li>155xxxx8383</li>
+            <li>155xxxx8222</li>
+            <li>155xxxx8555</li>
+            <li>185xxxx6262</li>
+            <li>155xxxx8585</li>
+        </ul>
+    </div>
+    <div class="result">
+        <p>谢谢参与！</p>
+        <a href="javascript:void(0);"></a>
+    </div>
+</div>
+</body>
+</html>
